@@ -4,7 +4,7 @@ subfinder -d $1 >> domains.txt ; assetfinder -subs-only $1 >> domains.txt ; amas
 curl -s "http://web.archive.org/cdx/search/cdx?url=*.$1/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" | sort -u >> domains.txt
 curl -s "https://jldc.me/anubis/subdomains/$1" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u >> domains.txt
 curl -s "https://crt.sh/?q=%25.$1&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u >> domains.txt
-puredns -r dnsresolve.txt bruteforce ~/Wordlist/SecLists/Discovery/DNS/n0kovo_subdomains.txt $1 >> domains.txt
+puredns -r wordlist/SecLists/Miscellaneous/dns-resolvers.txt bruteforce ~/wordlist/SecLists/Discovery/DNS/n0kovo_subdomains.txt $1 >> domains.txt
 
 echo '
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Subdomain Scan Completed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
